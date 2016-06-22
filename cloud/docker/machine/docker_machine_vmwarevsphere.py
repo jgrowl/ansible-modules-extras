@@ -32,16 +32,17 @@ def main():
     argument_spec = dict(
         username=dict(type='str', required=True),
         password=dict(type='str', required=True),
-        cpu_count=dict(type='str'),
-        memory_size=dict(type='str'),
-        disk_size=dict(type='str'),
+        cpu_count=dict(type='int'),
+        memory_size=dict(type='int'),
         boot2docker_url=dict(type='str'),
         vcenter=dict(type='str'),
+        vcenter_port=dict(type='int'),
+        disk_size=dict(type='int'),
         network=dict(type='str'),
         datastore=dict(type='str'),
         datacenter=dict(type='str'),
         pool=dict(type='str'),
-        compute_ip=dict(type='str')
+        hostsystem=dict(type='str')
     )
 
     machine = AnsibleDockerMachine(

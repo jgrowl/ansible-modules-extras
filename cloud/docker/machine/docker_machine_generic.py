@@ -31,9 +31,10 @@ from ansible.module_utils.docker_machine_common import *
 def main():
     argument_spec = dict(
         ip_address=dict(type='str', required=True),
-        ssh_user=dict(type='str'),
+        engine_port=dict(type='int'),
         ssh_key=dict(type='str'),
-        ssh_port=dict(type='str')
+        ssh_user=dict(type='str'),
+        ssh_port=dict(type='int')
     )
 
     machine = AnsibleDockerMachine(

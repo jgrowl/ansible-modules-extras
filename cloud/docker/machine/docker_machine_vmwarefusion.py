@@ -31,9 +31,10 @@ from ansible.module_utils.docker_machine_common import *
 def main():
     argument_spec = dict(
         boot2docker_url=dict(type='str'),
-        cpu_count=dict(type='str'),
-        disk_size=dict(type='str'),
-        memory_size=dict(type='str')
+        cpu_count=dict(type='int'),
+        disk_size=dict(type='int'),
+        memory_size=dict(type='int'),
+        no_share=dict(type='bool')
     )
 
     machine = AnsibleDockerMachine(

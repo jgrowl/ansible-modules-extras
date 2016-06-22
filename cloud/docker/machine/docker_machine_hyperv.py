@@ -31,10 +31,12 @@ from ansible.module_utils.docker_machine_common import *
 def main():
     argument_spec = dict(
         boot2docker_url=dict(type='str'),
-        boot2docker_location=dict(type='str'),
         virtual_switch=dict(type='str'),
         disk_size=dict(type='str'),
-        memory=dict(type='str')
+        memory=dict(type='str'),
+        cpu_count=dict(type='int'),
+        static_macaddress=dict(type='str'),
+        vlan_id=dict(type='str')
     )
 
     machine = AnsibleDockerMachine(

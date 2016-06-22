@@ -30,10 +30,8 @@ from ansible.module_utils.docker_machine_common import *
 
 def main():
     argument_spec = dict(
-        access_token=dict(type='str'),
+        access_token=dict(type='str', required=True),
         image=dict(type='str'),
-        # TODO: support all regions, ideally use external all to get all choices
-        # , choices=['nyc3']
         region=dict(type='str'),
         size=dict(type='str'),
         ipv6=dict(type='bool'),

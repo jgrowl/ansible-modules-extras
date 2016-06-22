@@ -32,21 +32,28 @@ def main():
     argument_spec = dict(
         access_key=dict(type='str', required=True),
         secret_key=dict(type='str', required=True),
-        vpc_id=dict(type='str', required=True),
         session_token=dict(type='str'),
         ami=dict(type='str'),
         region=dict(type='str'),
+        vpc_id=dict(type='str', required=True),
         zone=dict(type='str'),
         subnet_id=dict(type='str'),
         security_group=dict(type='str'),
+        tags=dict(type='str'),
         instance_type=dict(type='str'),
+        device_name=dict(type='str'),
         root_size=dict(type='str'),
+        volume_type=dict(type='str'),
         iam_instance_profile=dict(type='str'),
         ssh_user=dict(type='str'),
         request_spot_instance=dict(type='bool'),
         spot_price=dict(type='str'),
+        use_private_address=dict(type='bool'),
         private_address_only=dict(type='bool'),
-        monitoring=dict(type='bool')
+        monitoring=dict(type='bool'),
+        use_ebs_optimized_instance=dict(type='bool'),
+        ssh_keypath=dict(type='string'),
+        retries=dict(type='int'),
     )
 
     machine = AnsibleDockerMachine(
