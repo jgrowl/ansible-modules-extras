@@ -41,7 +41,9 @@ def main():
         address=dict(type='str'),
         preemptible=dict(type='str'),
         tags=dict(type='str'),
-        use_internal_ip=dict(type='str')
+        use_internal_ip=dict(type='bool'),
+        use_internal_ip_only=dict(type='bool'),
+        use_existing=dict(type='bool')
     )
 
     machine = AnsibleDockerMachine(

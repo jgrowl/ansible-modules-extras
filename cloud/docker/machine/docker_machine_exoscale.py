@@ -37,7 +37,9 @@ def main():
         disk_size=dict(type='str'),
         image=dict(type='str'),
         security_group=dict(type='str'),
-        availability_zone=dict(type='str')
+        availability_zone=dict(type='str'),
+        ssh_user=dict(type='str'),
+        userdata=dict(type='str')
     )
 
     machine = AnsibleDockerMachine(

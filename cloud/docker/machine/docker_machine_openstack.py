@@ -30,29 +30,36 @@ from ansible.module_utils.docker_machine_common import *
 
 def main():
     argument_spec = dict(
-        auth_url=dict(type='str'),
-        flavor_name=dict(type='str'),
+        auth_url=dict(type='str', required=True),
+        # TODO: Either id or name is required, but not both for flavor
         flavor_id=dict(type='str'),
-        image_name=dict(type='str'),
+        flavor_name=dict(type='str'),
+        # TODO: Either id or name is required, but not both for image.
         image_id=dict(type='str'),
-        insecure=dict(type='str'),
-        domain_name=dict(type='str'),
-        domain_id=dict(type='str'),
-        username=dict(type='str'),
-        password=dict(type='str'),
-        tenant_name=dict(type='str'),
-        tenant_id=dict(type='str'),
-        region=dict(type='str'),
+        image_name=dict(type='str'),
+        active_timeout=dict(type='str'),
         availability_zone=dict(type='str'),
+        # TODO: Either id or name, but not both for domain
+        domain_id=dict(type='str'),
+        domain_name=dict(type='str'),
         endpoint_type=dict(type='str'),
-        net_name=dict(type='str'),
-        net_id=dict(type='str'),
-        sec_groups=dict(type='str'),
         floatingip_pool=dict(type='str'),
+        keypair_name=dict(type='str'),
+        insecure=dict(type='str'),
         ip_version=dict(type='str'),
-        ssh_user=dict(type='str'),
+        # TODO: Either id or name, but not both for net
+        net_id=dict(type='str'),
+        net_name=dict(type='str'),
+        password=dict(type='str'),
+        private_key_file=dict(type='str'),
+        region=dict(type='str'),
+        sec_groups=dict(type='str'),
+        username=dict(type='str'),
         ssh_port=dict(type='str'),
-        active_timeout=dict(type='str')
+        ssh_user=dict(type='str'),
+        # TODO: Either id or name, but not both for tenant
+        tenant_id=dict(type='str'),
+        tenant_name=dict(type='str')
     )
 
     machine = AnsibleDockerMachine(

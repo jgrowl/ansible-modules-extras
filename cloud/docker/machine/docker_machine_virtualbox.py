@@ -30,15 +30,18 @@ from ansible.module_utils.docker_machine_common import *
 
 def main():
     argument_spec = dict(
-        memory=dict(type='str'),
-        cpu_count=dict(type='str'),
-        disk_size=dict(type='str'),
+        memory=dict(type='int'),
+        cpu_count=dict(type='int'),
+        disk_size=dict(type='int'),
+        host_dns_resolver=dict(type='bool'),
         boot2docker_url=dict(type='str'),
         import_boot2docker_vm=dict(type='str'),
         hostonly_cidr=dict(type='str'),
         hostonly_nictype=dict(type='str'),
         hostonly_nicpromisc=dict(type='str'),
-        no_share=dict(type='str')
+        no_share=dict(type='bool'),
+        no_dns_proxy=dict(type='bool'),
+        no_vtx_check=dict(type='bool')
     )
 
     machine = AnsibleDockerMachine(

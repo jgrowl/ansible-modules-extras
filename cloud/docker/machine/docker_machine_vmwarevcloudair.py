@@ -39,11 +39,11 @@ def main():
         publicip=dict(type='str'),
         catalog=dict(type='str'),
         catalogitem=dict(type='str'),
-        provision=dict(type='str'),
-        cpu_count=dict(type='str'),
-        memory_size=dict(type='str'),
-        ssh_port=dict(type='str'),
-        docker_port=dict(type='str')
+        provision=dict(type='bool'),
+        cpu_count=dict(type='int'),
+        memory_size=dict(type='int'),
+        ssh_port=dict(type='int'),
+        docker_port=dict(type='int')
     )
 
     machine = AnsibleDockerMachine(

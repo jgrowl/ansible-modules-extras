@@ -31,15 +31,21 @@ from ansible.module_utils.docker_machine_common import *
 def main():
     argument_spec = dict(
         subscription_id=dict(type='str', required=True),
-        subscription_cert=dict(type='str', required=True),
-        docker_port=dict(type='str'),
-        image=dict(type='str'),
         location=dict(type='str'),
-        password=dict(type='str'),
-        publish_settings_file=dict(type='str'),
+        resource_group=dict(type='str'),
         size=dict(type='str'),
-        ssh_port=dict(type='str'),
-        username=dict(type='str')
+        ssh_user=dict(type='str'),
+        vnet=dict(type='str'),
+        subnet=dict(type='str'),
+        subnet_prefix=dict(type='str'),
+        availability_set=dict(type='str'),
+        open_port=dict(type='str'),
+        private_ip_address=dict(type='str'),
+        use_private_ip=dict(type='bool'),
+        no_public_ip=dict(type='bool'),
+        static_public_ip=dict(type='string'),
+        docker_port=dict(type='int'),
+        environment=dict(type='str'),
     )
 
     machine = AnsibleDockerMachine(
