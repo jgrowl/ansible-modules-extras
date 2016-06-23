@@ -23,6 +23,90 @@ DOCUMENTATION = '''
 ---
 module: docker_machine_digitalocean
 short_description: Create a digitalocean docker host machine using docker-machine
+description:
+     - Manage the life cycle of a DigitalOcean docker machine
+options:
+  name:
+    description:
+      -
+  state:
+    description:
+      - 'I(absent) - A machine matching the specified name will be stopped and removed.'
+      - 'I(present)" - Asserts the existence of a machine matching the name and any provided configuration parameters.
+         If no machine matches the name, a container will be created. If a machine matches the name but the provided
+         configuration does not match, the machine will be updated, if it can be. If it cannot be updated, it will be
+         removed and re-created with the requested config. Use the recreate option to force the re-creation of the
+         matching machine.'
+      - 'I(started) - Asserts there is a running machine matching the name and any provided configuration. If no machine
+         matches the name, a machine will be created and started. If a container matching the name is found but the
+         configuration does not match, the container will be updated, if it can be. If it cannot be updated, it will be
+         removed and a new container will be created with the requested configuration and started. Use recreate to
+         always re-create a matching container, even if it is running. Use restart to force a matching machine to be
+         stopped and restarted.'
+      - 'I(stopped) - Asserts that the machine is first I(present), and then if the machine is running moves it to a
+         stopped state.'
+    required: false
+    default: started
+    choices:
+      - absent
+      - present
+      - stopped
+      - started
+  access_token:
+    description:
+      - Your personal access token for the Digital Ocean API.
+    default: null
+    required: true
+  image:
+    description:
+      - The name of the Digital Ocean image to use.
+    default: null
+    required: false
+  region:
+    description:
+      - The region to create the droplet in, see Regions API for how to get a list.
+    default: null
+    required: false
+  size:
+    description:
+      - The size of the Digital Ocean droplet (larger than default options are of the form 2gb).
+    default: null
+    required: false
+  ipv6:
+    description:
+      - Enable IPv6 support for the droplet.
+    default: null
+    required: false
+  private_networking:
+    description:
+      - Enable private networking support for the droplet.
+    default: null
+    required: false
+  backups:
+    description:
+      - Enable Digital Oceans backups for the droplet.
+    default: null
+    required: false
+  userdata:
+    description:
+      - Path to file containing User Data for the droplet.
+    default: null
+    required: false
+  ssh_user:
+    description:
+      - SSH username.
+    default: null
+    required: false
+  ssh_port:
+    description:
+      - SSH port.
+    default: null
+    required: false
+  ssh_key_fingerprint:
+    description:
+      - Use an existing SSH key instead of creating a new one, see SSH keys.
+    default: null
+    required: false
 '''
 
 from ansible.module_utils.docker_machine_common import *
