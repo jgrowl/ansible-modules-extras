@@ -22,13 +22,13 @@
 DOCUMENTATION = '''
 ---
 module: docker_machine_vmwarevsphere
-short_description: Create a vmwarevsphere docker host machine using docker-machine
+short_description: Create a VMWare vSphere docker host machine using docker-machine
 description:
   - Manage the life cycle of an VMWare vSphere docker machine
 options:
   name:
     description:
-      -
+      - Name of the managed docker-machine
   state:
     description:
       - 'I(absent) - A machine matching the specified name will be stopped and removed.'
@@ -59,7 +59,7 @@ options:
     required: true
   password:
     description:
-      -vSphere Password.
+      - vSphere Password.
     default: null
     required: true
   cpu_count:

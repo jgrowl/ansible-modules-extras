@@ -28,7 +28,7 @@ description:
 options:
   name:
     description:
-      -
+      - Name of the managed docker-machine
   state:
     description:
       - 'I(absent) - A machine matching the specified name will be stopped and removed.'
