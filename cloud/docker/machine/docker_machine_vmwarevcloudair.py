@@ -25,6 +25,7 @@ module: docker_machine_vmwarevcloudair
 short_description: Create a vmwarevcloudair docker host machine using docker-machine
 description:
   - Manage the life cycle of an VMWare VCloud Air docker machine
+version_added: "2.2"
 options:
   name:
     description:

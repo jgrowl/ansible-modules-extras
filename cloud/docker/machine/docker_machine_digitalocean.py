@@ -25,6 +25,7 @@ module: docker_machine_digitalocean
 short_description: Create a digitalocean docker host machine using docker-machine
 description:
      - Manage the life cycle of a DigitalOcean docker machine
+version_added: "2.2"
 options:
   name:
     description:
