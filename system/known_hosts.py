@@ -51,6 +51,21 @@ options:
     choices: [ "present", "absent" ]
     required: no
     default: present
+  keyscan:
+    description:
+    - Utility for gathering the public ssh host key
+    - always option is vulnerable to MitM attacks and therefore should never be used in production environments.
+    choices: ["never", "once", "always"]
+    required: no
+    default: never
+    version_added: "2.2"
+  keyscan_type:
+    description:
+      -  Specifies the type of the key to fetch from the scanned hosts.
+    choices: ["dsa","ecdsa","ed25519","rsa"]
+    required: no
+    default: rsa
+    version_added: "2.2"
 requirements: [ ]
 author: "Matthew Vernon (@mcv21)"
 '''
@@ -91,19 +106,32 @@ def enforce_state(module, params):
     port = params.get("port",None)
     path = params.get("path")
     state = params.get("state")
+    keyscan = params.get("keyscan")
+    keyscan_type = params.get("keyscan_type")
+
+    if keyscan == "always":
+        params["warnings"] = ["The 'always' keyscan option is a security vulnerability and should not be used in "
+                              "production environments."]
+
     #Find the ssh-keygen binary
     sshkeygen = module.get_bin_path("ssh-keygen",True)
+
+    #Find the ssh-keyscan binary
+    sshkeyscan = module.get_bin_path("ssh-keyscan",True)
 
     # Trailing newline in files gets lost, so re-add if necessary
     if key and key[-1] != '\n':
         key+='\n'
 
-    if key is None and state != "absent":
+    if key is None and state != "absent" and keyscan == "never":
         module.fail_json(msg="No key specified when adding a host")
 
     sanity_check(module,host,key,sshkeygen)
 
-    found,replace_or_add,found_line=search_for_host_key(module,host,key,path,sshkeygen)
+    found,replace_or_add,found_line,keyscanned_key=search_for_host_key(module,host,key,path,sshkeygen, keyscan,
+                                                                       keyscan_type, sshkeyscan)
+    if keyscanned_key is not None:
+        key = keyscanned_key
 
     #We will change state if found==True & state!="present"
     #or found==False & state=="present"
@@ -192,7 +220,7 @@ def sanity_check(module,host,key,sshkeygen):
     if stdout=='': #host not found
         module.fail_json(msg="Host parameter does not match hashed host field in supplied key")
 
-def search_for_host_key(module,host,key,path,sshkeygen):
+def search_for_host_key(module,host,key,path,sshkeygen,keyscan,keyscan_type,sshkeyscan):
     '''search_for_host_key(module,host,key,path,sshkeygen) -> (found,replace_or_add,found_line)
 
     Looks up host and keytype in the known_hosts file path; if it's there, looks to see
@@ -210,16 +238,20 @@ def search_for_host_key(module,host,key,path,sshkeygen):
     rc,stdout,stderr=module.run_command([sshkeygen,'-F',host,'-f',path],
                                  check_rc=False)
     if stdout=='' and stderr=='' and (rc==0 or rc==1):
-        return False, False, None #host not found, no other errors
+        keyscan_key = _keyscan(module, host, keyscan_type, sshkeyscan)
+        return False, False, None, keyscan_key #host not found, no other errors
     if rc!=0: #something went wrong
         module.fail_json(msg="ssh-keygen failed (rc=%d,stdout='%s',stderr='%s')" % (rc,stdout,stderr))
 
-    #If user supplied no key, we don't want to try and replace anything with it
-    if key is None:
-        return True, False, None
+    #If user supplied no key and we are not keyscanning, we don't want to try and replace anything with it
+    if key is None and keyscan == 'never':
+        return True, False, None, None
 
     lines=stdout.split('\n')
-    new_key = normalize_known_hosts_key(key, host)
+    if keyscan == 'never':
+        new_key = normalize_known_hosts_key(key, host)
+    else:
+        new_key = None
 
     for l in lines:
         if l=='':
@@ -234,12 +266,28 @@ def search_for_host_key(module,host,key,path,sshkeygen):
                 module.fail_json(msg="failed to parse output of ssh-keygen for line number: '%s'" % l)
         else:
             found_key = normalize_known_hosts_key(l,host)
+            keyscanned_key = None
+            if keyscan == 'once':
+                # Nothing needs replaced if there is already an entry for the host.
+                # If the host's key changes or if there is an attack you will get an error when trying to connect
+                return True, False, found_line, keyscanned_key
+            elif keyscan == 'always':
+                # This option should never be used in production environments. It is vulnerable to MitM attacks.
+                key = _keyscan(module, host, keyscan_type, sshkeyscan)
+                new_key = normalize_known_hosts_key(key, host)
+
             if new_key==found_key: #found a match
-                return True, False, found_line  #found exactly the same key, don't replace
+                return True, False, found_line, keyscanned_key  #found exactly the same key, don't replace
             elif new_key['type'] == found_key['type']: # found a different key for the same key type
-                return True, True, found_line
+                return True, True, found_line, keyscanned_key
     #No match found, return found and replace, but no line
     return True, True, None
+
+def _keyscan(module, host, keyscan_type, sshkeyscan):
+    rc, out, err = module.run_command([sshkeyscan,'-t',keyscan_type,host], check_rc=True)
+    if out=='': # host not found
+        module.fail_json(msg="Unable to ssh-keyscan host {}".format(host))
+    return out
 
 def normalize_known_hosts_key(key, host):
     '''
@@ -273,8 +321,11 @@ def main():
             key       = dict(required=False,  type='str'),
             path      = dict(default="~/.ssh/known_hosts", type='path'),
             state     = dict(default='present', choices=['absent','present']),
+            keyscan   = dict(default='never', choices=['never', 'once', 'always']),
+            keyscan_type = dict(default='rsa', choices=['dsa','ecdsa','ed25519','rsa'])
             ),
-        supports_check_mode = True
+        supports_check_mode = True,
+        mutually_exclusive = [['key', 'keyscan']]
         )
 
     results = enforce_state(module,module.params)
