@@ -54,7 +54,7 @@ options:
   keyscan:
     description:
     - Utility for gathering the public ssh host key
-    - 'always' option is vulnerable to MitM attacks and therefore should never be used in production environments.
+    - always option is vulnerable to MitM attacks and therefore should never be used in production environments.
     choices: ["never", "once", "always"]
     deault: never
   keyscan_type:
