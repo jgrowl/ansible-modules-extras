@@ -25,6 +25,7 @@ module: docker_machine_generic
 short_description: Create a generic docker host machine using docker-machine
 description:
   - Manage the life cycle of a generic docker machine
+version_added: "2.2"
 options:
   name:
     description:

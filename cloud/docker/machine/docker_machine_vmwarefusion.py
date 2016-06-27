@@ -25,6 +25,7 @@ module: docker_machine_vmwarefusion
 short_description: Create a VMWare Fusion docker host machine using docker-machine
 description:
   - Manage the life cycle of an VMWare Fusion docker machine
+version_added: "2.2"
 options:
   name:
     description:
