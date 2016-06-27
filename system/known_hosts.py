@@ -56,12 +56,14 @@ options:
     - Utility for gathering the public ssh host key
     - always option is vulnerable to MitM attacks and therefore should never be used in production environments.
     choices: ["never", "once", "always"]
+    required: no
     deault: never
     version_added: "2.2"
   keyscan_type:
     descrption:
       -  Specifies the type of the key to fetch from the scanned hosts.
     choices: ["dsa","ecdsa","ed25519","rsa"]
+    required: no
     default: rsa
     version_added: "2.2"
 requirements: [ ]
