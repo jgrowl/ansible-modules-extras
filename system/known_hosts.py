@@ -60,7 +60,7 @@ options:
     deault: never
     version_added: "2.2"
   keyscan_type:
-    descrption:
+    description:
       -  Specifies the type of the key to fetch from the scanned hosts.
     choices: ["dsa","ecdsa","ed25519","rsa"]
     required: no
