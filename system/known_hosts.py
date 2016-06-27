@@ -57,11 +57,13 @@ options:
     - always option is vulnerable to MitM attacks and therefore should never be used in production environments.
     choices: ["never", "once", "always"]
     deault: never
+    version_added: "2.2"
   keyscan_type:
     descrption:
       -  Specifies the type of the key to fetch from the scanned hosts.
     choices: ["dsa","ecdsa","ed25519","rsa"]
     default: rsa
+    version_added: "2.2"
 requirements: [ ]
 author: "Matthew Vernon (@mcv21)"
 '''
