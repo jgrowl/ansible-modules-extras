@@ -25,6 +25,7 @@ module: docker_machine_amazonec2
 short_description: Create a amazonec2 docker host machine using docker-machine
 description:
      - Manage the life cycle of an Amazon EC2 docker machine
+version_added: "2.2"
 options:
   name:
     description:

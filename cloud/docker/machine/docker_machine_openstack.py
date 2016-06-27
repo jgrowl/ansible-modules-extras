@@ -25,6 +25,7 @@ module: docker_machine_openstack
 short_description: Create an Openstack docker host machine using docker-machine
 description:
   - Manage the life cycle of an OpenStack docker machine
+version_added: "2.2"
 options:
   name:
     description:

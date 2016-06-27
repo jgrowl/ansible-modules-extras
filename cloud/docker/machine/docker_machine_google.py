@@ -25,6 +25,7 @@ module: docker_machine_google
 short_description: Create a google docker host machine using docker-machine
 description:
   - Manage the life cycle of a Google Compute Engine docker machine
+version_added: "2.2"
 options:
   name:
     description:

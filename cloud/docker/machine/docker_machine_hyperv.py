@@ -25,6 +25,7 @@ module: docker_machine_hyperv
 short_description: Create a hyperv docker host machine using docker-machine
 description:
   - Manage the life cycle of a Microsoft Hyperv docker machine
+version_added: "2.2"
 options:
   name:
     description:

@@ -25,6 +25,7 @@ module: docker_machine_softlayer
 short_description: Create a softlayer docker host machine using docker-machine
 description:
   - Manage the life cycle of an IBM Softlayer docker machine
+version_added: "2.2"
 options:
   name:
     description:

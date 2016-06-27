@@ -25,6 +25,7 @@ module: docker_machine
 short_description: Create a exoscale docker host machine using docker-machine
 description:
      - Manage the life cycle of an Exoscale docker machine
+version_added: "2.2"
 options:
   name:
     description:

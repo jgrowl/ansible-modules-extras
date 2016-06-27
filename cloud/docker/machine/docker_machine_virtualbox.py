@@ -25,6 +25,7 @@ module: docker_machine_virtualbox
 short_description: Create an Oracle VirtualBox docker host machine using docker-machine
 description:
   - Manage the life cycle of a Oracle VirtualBox docker machine
+version_added: "2.2"
 options:
   name:
     description:
