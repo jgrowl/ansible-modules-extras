@@ -57,7 +57,7 @@ options:
     - always option is vulnerable to MitM attacks and therefore should never be used in production environments.
     choices: ["never", "once", "always"]
     required: no
-    deault: never
+    default: never
     version_added: "2.2"
   keyscan_type:
     description:
