@@ -109,6 +109,9 @@ def enforce_state(module, params):
     keyscan = params.get("keyscan")
     keyscan_type = params.get("keyscan_type")
 
+    if keyscan == "always":
+        params["warnings"] = ["The 'always' keyscan option is a security vulnerability and should not be used in production environments."]
+
     #Find the ssh-keygen binary
     sshkeygen = module.get_bin_path("ssh-keygen",True)
 
@@ -119,7 +122,7 @@ def enforce_state(module, params):
     if key and key[-1] != '\n':
         key+='\n'
 
-    if key is None and state != "absent" and keyscan == 'never':
+    if key is None and state != "absent" and keyscan == "never":
         module.fail_json(msg="No key specified when adding a host")
 
     sanity_check(module,host,key,sshkeygen)
