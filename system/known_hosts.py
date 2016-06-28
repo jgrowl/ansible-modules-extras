@@ -110,7 +110,8 @@ def enforce_state(module, params):
     keyscan_type = params.get("keyscan_type")
 
     if keyscan == "always":
-        params["warnings"] = ["The 'always' keyscan option is a security vulnerability and should not be used in production environments."]
+        params["warnings"] = ["The 'always' keyscan option is a security vulnerability and should not be used in "
+                              "production environments."]
 
     #Find the ssh-keygen binary
     sshkeygen = module.get_bin_path("ssh-keygen",True)
@@ -127,7 +128,8 @@ def enforce_state(module, params):
 
     sanity_check(module,host,key,sshkeygen)
 
-    found,replace_or_add,found_line,keyscanned_key=search_for_host_key(module,host,key,path,sshkeygen, keyscan, keyscan_type, sshkeyscan)
+    found,replace_or_add,found_line,keyscanned_key=search_for_host_key(module,host,key,path,sshkeygen, keyscan,
+                                                                       keyscan_type, sshkeyscan)
     if keyscanned_key is not None:
         key = keyscanned_key
 
@@ -318,7 +320,8 @@ def main():
             keyscan   = dict(default='never', choices=['never', 'once', 'always']),
             keyscan_type = dict(default='rsa', choices=['dsa','ecdsa','ed25519','rsa'])
             ),
-        supports_check_mode = True
+        supports_check_mode = True,
+        mutually_exclusive = [['key', 'keyscan']]
         )
 
     results = enforce_state(module,module.params)
