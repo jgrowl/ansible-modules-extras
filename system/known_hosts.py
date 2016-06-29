@@ -248,7 +248,10 @@ def search_for_host_key(module,host,key,path,sshkeygen,keyscan,keyscan_type,sshk
         return True, False, None, None
 
     lines=stdout.split('\n')
-    new_key = normalize_known_hosts_key(key, host) if keyscan == 'never' else None
+    if keyscan == 'never':
+        new_key = normalize_known_hosts_key(key, host)
+    else:
+        new_key = None
 
     for l in lines:
         if l=='':
