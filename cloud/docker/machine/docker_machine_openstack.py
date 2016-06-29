@@ -193,10 +193,8 @@ from ansible.module_utils.docker_machine_common import *
 def main():
     argument_spec = dict(
         auth_url=dict(type='str', required=True),
-        # TODO: Either id or name is required, but not both for flavor
         flavor_id=dict(type='str'),
         flavor_name=dict(type='str'),
-        # TODO: Either id or name is required, but not both for image.
         image_id=dict(type='str'),
         image_name=dict(type='str'),
         active_timeout=dict(type='str'),
@@ -229,10 +227,16 @@ def main():
         ['tenant_id', 'tenant_name']
     ]
 
+    required_one_of = [
+        ['flavor_id', 'flavor_name'],
+        ['image_id', 'image_name']
+    ]
+
     machine = AnsibleDockerMachine(
             argument_spec=argument_spec,
             supports_check_mode=True,
-            mutually_exclusive=mutually_exclusive
+            mutually_exclusive=mutually_exclusive,
+            required_one_of=required_one_of
     )
 
     results = dict(
