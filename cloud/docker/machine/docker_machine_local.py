@@ -30,6 +30,7 @@ options:
   name:
     description:
       - Name of the managed docker-machine
+    required: true
   state:
     description:
       - 'I(absent) - A machine matching the specified name will be stopped and removed.'
@@ -46,13 +47,99 @@ options:
          stopped and restarted.'
       - 'I(stopped) - Asserts that the machine is first I(present), and then if the machine is running moves it to a
          stopped state.'
-  required: false
-  default: started
-  choices:
-    - absent
-    - present
-    - stopped
-    - started
+    required: false
+    default: started
+    choices:
+      - absent
+      - present
+      - stopped
+      - started
+'''
+
+EXAMPLES = '''
+# Create a docker-machine.
+- docker_machine_local:
+    name: machine01
+    state: started
+
+# Delete a docker-machine.
+- docker_machine_local:
+    name: machine01
+    state: absent
+'''
+
+RETURN = '''
+ansible_docker_machine:
+    description: 'Facts representing the currently known configuration of the machine. Note that facts are not part of
+                  registered vars but accessible directly.'
+    returned: always
+    type: dict
+    sample: '{
+            "config_version": 3,
+            "driver": {
+                "ip_address": "",
+                "machine_name": "test123",
+                "ssh_key_path": "",
+                "ssh_port": 0,
+                "ssh_user": "",
+                "store_path": "/home/xxxxx/xxxxxx/.docker/machine",
+                "swarm_discovery": "",
+                "swarm_host": "",
+                "swarm_master": false,
+                "url": "127.0.0.1"
+            },
+            "driver_name": "none",
+            "host_options": {
+                "auth_options": {
+                    "ca_cert_path": "/home/xxxxxx/.docker/machine/certs/ca.pem",
+                    "ca_cert_remote_path": "",
+                    "ca_private_key_path": "/home/xxxxxxx/.docker/machine/certs/ca-key.pem",
+                    "cert_dir": "/home/xxxxxxx/.docker/machine/certs",
+                    "client_cert_path": "/home/xxxxxxx/.docker/machine/certs/cert.pem",
+                    "client_key_path": "/home/xxxxxxx/.docker/machine/certs/key.pem",
+                    "server_cert_path": "/home/xxxxxxx/.docker/machine/machines/xxxxxxxx/server.pem",
+                    "server_cert_remote_path": "",
+                    "server_cert_sa_ns": [],
+                    "server_key_path": "/home/xxxxxxx/.docker/machine/machines/xxxxxxxx/server-key.pem",
+                    "server_key_remote_path": "",
+                    "store_path": "/home/xxxxxx/.docker/machine/machines/xxxxxxxx"
+                },
+                "disk": 0,
+                "driver": "",
+                "engine_options": {
+                    "arbitrary_flags": [],
+                    "dns": null,
+                    "env": [],
+                    "graph_dir": "",
+                    "insecure_registry": [],
+                    "install_url": "https://get.docker.com",
+                    "ipv6": false,
+                    "labels": [],
+                    "log_level": "",
+                    "registry_mirror": [],
+                    "selinux_enabled": false,
+                    "storage_driver": "",
+                    "tls_verify": true
+                },
+                "memory": 0,
+                "swarm_options": {
+                    "address": "",
+                    "arbitrary_flags": [],
+                    "discovery": "",
+                    "env": null,
+                    "heartbeat": 0,
+                    "host": "tcp://0.0.0.0:3376",
+                    "image": "swarm:latest",
+                    "is_experimental": false,
+                    "is_swarm": false,
+                    "master": false,
+                    "overcommit": 0,
+                    "strategy": "spread"
+                }
+            },
+            "name": "xxxxxxx"
+        }
+    }'
 '''
 
 from ansible.module_utils.docker_machine_common import *
