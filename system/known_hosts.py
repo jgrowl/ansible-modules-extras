@@ -248,6 +248,7 @@ def search_for_host_key(module,host,key,path,sshkeygen,keyscan,keyscan_type,sshk
         return True, False, None, None
 
     lines=stdout.split('\n')
+    new_key = normalize_known_hosts_key(key, host) if keyscan == 'never' else None
 
     for l in lines:
         if l=='':
@@ -264,14 +265,14 @@ def search_for_host_key(module,host,key,path,sshkeygen,keyscan,keyscan_type,sshk
             found_key = normalize_known_hosts_key(l,host)
             keyscanned_key = None
             if keyscan == 'once':
-                # We previously added a keyscanned key. Nothing needs replaced.
+                # Nothing needs replaced if there is already an entry for the host.
                 # If the host's key changes or if there is an attack you will get an error when trying to connect
                 return True, False, found_line, keyscanned_key
             elif keyscan == 'always':
-                # This option should never be used in production environments. It is vulnerable to MitM attacks
+                # This option should never be used in production environments. It is vulnerable to MitM attacks.
                 key = _keyscan(module, host, keyscan_type, sshkeyscan)
+                new_key = normalize_known_hosts_key(key, host)
 
-            new_key = normalize_known_hosts_key(key, host)
             if new_key==found_key: #found a match
                 return True, False, found_line, keyscanned_key  #found exactly the same key, don't replace
             elif new_key['type'] == found_key['type']: # found a different key for the same key type
