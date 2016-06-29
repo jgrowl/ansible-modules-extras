@@ -111,9 +111,9 @@ options:
     required: false
   use_internal_ip:
     description:
-      - 'When this option is used during create it will make docker-machine use internal rather than public NATed IPs.
+      - "When this option is used during create it will make docker-machine use internal rather than public NATed IPs.
          The flag is persistent in the sense that a machine created with it retains the IP. It's useful for managing
-         docker machines from another machine on the same network e.g. while deploying swarm.'
+         docker machines from another machine on the same network e.g. while deploying swarm."
     default: null
     required: false
   use_internal_ip_only:
