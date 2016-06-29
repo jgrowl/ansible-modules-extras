@@ -97,7 +97,7 @@ options:
     required: false
   address:
     description:
-      - Instance's static external IP (name or IP).
+      - "Instance's static external IP (name or IP)."
     default: null
     required: false
   preemptible:
@@ -119,16 +119,16 @@ options:
     required: false
   use_internal_ip_only:
     description:
-      - 'When this option is used during create, the new VM will not be assigned a public IP address. This is useful
-         only when the host running `docker-machine` is located inside the Google Cloud infrastructure; otherwise,
-         `docker-machine` can't reach the VM to provision the Docker daemon. The presence of this flag implies
-         `use_internal_ip`.'
+      - "When this option is used during create, the new VM will not be assigned a public IP address. This is useful
+         only when the host running docker-machine is located inside the Google Cloud infrastructure; otherwise,
+         docker-machine can't reach the VM to provision the Docker daemon. The presence of this flag implies
+         use_internal_ip."
     default: null
     required: false
   use_existing:
     description:
-      - 'Don't create a new VM, use an existing one. This is useful when you'd like to provision Docker on a VM you
-         created yourself, maybe because it uses create options not supported by this driver.'
+      - "Don't create a new VM, use an existing one. This is useful when you'd like to provision Docker on a VM you
+         created yourself, maybe because it uses create options not supported by this driver."
     default: null
     required: false
 '''

@@ -181,6 +181,8 @@ EXAMPLES = '''
 # Create a docker-machine.
 - docker_machine_amazonec2:
     name: machine01
+    access_key: xxxxxxxxxxxx
+    secret_key: xxxxxxxxxxxx
     state: started
 
 # Delete a docker-machine.

@@ -148,11 +148,13 @@ EXAMPLES = '''
 # Create a docker-machine.
 - docker_machine_azure:
     name: machine01
+    subscription_id: xxxxxxxxxxxxx
     state: started
 
 # Delete a docker-machine.
 - docker_machine_azure:
     name: machine01
+    subscription_id: xxxxxxxxxxxxxxx
     state: absent
 '''
 

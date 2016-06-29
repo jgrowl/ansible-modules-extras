@@ -76,7 +76,7 @@ options:
     required: false
   image_id:
     description:
-      -Rackspace image ID. Default: Ubuntu 15.10 (Wily Werewolf) (PVHVM).
+      - Rackspace image ID. Default: Ubuntu 15.10 (Wily Werewolf) (PVHVM).
     default: null
     required: false
   flavor_id:

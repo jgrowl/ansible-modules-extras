@@ -115,11 +115,13 @@ EXAMPLES = '''
 # Create a docker-machine.
 - docker_machine_digitalocean:
     name: machine01
+    access_token: xxxxxxxxxxxxxx
     state: started
 
 # Delete a docker-machine.
 - docker_machine_digitalocean:
     name: machine01
+    access_token: xxxxxxxxxxxxx
     state: absent
 '''
 
