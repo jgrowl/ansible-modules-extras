@@ -140,7 +140,7 @@ options:
     required: false
   spot_price:
     description:
-      - Spot instance bid price (in dollars). Require the --amazonec2-request-spot-instance flag.
+      - Spot instance bid price (in dollars). Require the request_spot_instance flag.
     default: null
     required: false
   use_private_address:
