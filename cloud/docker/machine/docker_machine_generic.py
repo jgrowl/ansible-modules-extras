@@ -56,7 +56,7 @@ options:
       - started
   engine_port:
     description:
-      - Port to use for Docker Daemon (Note: This flag will not work with boot2docker).
+      - Port to use for Docker Daemon (Note This flag will not work with boot2docker).
     default: null
     required: false
   ip_address:
