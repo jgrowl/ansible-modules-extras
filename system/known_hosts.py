@@ -299,7 +299,7 @@ def main():
             key       = dict(required=False,  type='str'),
             path      = dict(default="~/.ssh/known_hosts", type='path'),
             state     = dict(default='present', choices=['absent','present']),
-            keyscan   = dict(default='never', choices=['never', 'once', 'always']),
+            keyscan   = dict(default='never', choices=['never', 'once']),
             keyscan_type = dict(default='rsa', choices=['dsa','ecdsa','ed25519','rsa'])
             ),
         supports_check_mode = True,
