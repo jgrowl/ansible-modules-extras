@@ -127,7 +127,7 @@ def enforce_state(module, params):
 
         rc, out, err = module.run_command([sshkeyscan,'-t',keyscan_type,host], check_rc=True)
         if out=='': # host not found
-            module.fail_json(msg="Unable to ssh-keyscan host {}".format(host))
+            module.fail_json(msg="Unable to ssh-keyscan host %s" % host)
 
         key = out
 
